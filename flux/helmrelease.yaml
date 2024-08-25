@@ -37,8 +37,8 @@ spec:
       statefulSet:
         resources:
           limits:
-            cpu: 2500m
-            memory: 11Gi
+            cpu: 1m
+            memory: 2Gi
             ephemeral-storage: 250Mi
           requests:
             cpu: 200m
