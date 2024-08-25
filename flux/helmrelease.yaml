@@ -73,11 +73,8 @@ spec:
           - hosts:
               - sk-blockyjungle.sharedkube.io # Required, your domain name
             secretName: vcluster-sharedkube-io-tls # Required, your secret name where the certificate is stored
-
     policies:
-      # empty, baseline, restricted can be used here
       podSecurityStandard: baseline
-
     rbac:
       role:
         enabled: false
