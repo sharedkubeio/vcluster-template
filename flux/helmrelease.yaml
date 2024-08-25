@@ -30,10 +30,10 @@ spec:
       advanced:
         serviceAccount:
           enabled: false
-          serviceAccountName: "flux-sa"
+          name: "flux-sa"
         workloadServiceAccount:
           enabled: false
-          serviceAccountName: "flux-sa"
+          name: "flux-sa"
       statefulSet:
         resources:
           limits:
@@ -60,7 +60,8 @@ spec:
         host: "{{ .Release.Namespace }}.sharedkube.io"
         annotations:
           cert-manager.io/issuer: "letsencrypt-prod" # Required for TLS, letsencrypt-prod or letsencrypt-staging
-        tls:
+        spec:
+          tls:
           - hosts:
               - "{{ .Release.Namespace }}.sharedkube.io"
             # Required, your domain name
