@@ -5,7 +5,7 @@ metadata:
   name: vcluster
 spec:
   serviceAccountName: flux-sa # Required, leave it as "flux-sa"
-  # targetNamespace: sk-cyancitron # Required, your namespace name
+  targetNamespace: sk-blockyjungle # Required, your namespace name
   interval: 10m
   timeout: 5m
   chart:
