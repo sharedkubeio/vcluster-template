@@ -27,6 +27,9 @@ spec:
     enable: true
   values:
     controlPlane:
+      distro:
+        k3s:
+          enabled: true
       advanced:
         serviceAccount:
           enabled: false
