@@ -26,7 +26,12 @@ spec:
   test:
     enable: true
   values:
+    exportKubeConfig:
+      server: https://sk-blockyjungle.sharedkube.io:443 # Required, your domain name
     controlPlane:
+      proxy:
+        extraSANs:
+          - sk-blockyjungle.sharedkube.io # Required, your domain name
       distro:
         k3s:
           enabled: true
