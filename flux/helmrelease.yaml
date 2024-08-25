@@ -1,0 +1,77 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vcluster
+spec:
+  serviceAccountName: flux-sa # Required, leave it as "flux-sa"
+  # targetNamespace: sk-cyancitron # Required, your namespace name
+  interval: 10m
+  timeout: 5m
+  chart:
+    spec:
+      chart: vcluster
+      version: 'v0.20.0'
+      sourceRef:
+        kind: HelmRepository
+        name: loft
+      interval: 5m
+  releaseName: vcluster
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  test:
+    enable: true
+  values:
+    controlPlane:
+      advanced:
+        serviceAccount:
+          enabled: false
+          serviceAccountName: "flux-sa"
+        workloadServiceAccount:
+          enabled: false
+          serviceAccountName: "flux-sa"
+      statefulSet:
+        resources:
+          limits:
+            cpu: 2500m
+            memory: 11Gi
+            ephemeral-storage: 250Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+            ephemeral-storage: 250Mi
+        persistence:
+          volumeClaim:
+            enabled: true
+            storageClass: fast-ebs
+            size: 10Gi
+        security:
+          podSecurityContext:
+            fsGroup: 12345
+          containerSecurityContext:
+            runAsUser: 12345
+            runAsNonRoot: true
+      ingress:
+        enabled: true
+        host: "{{ .Release.Namespace }}.sharedkube.io"
+        annotations:
+          cert-manager.io/issuer: "letsencrypt-prod" # Required for TLS, letsencrypt-prod or letsencrypt-staging
+        tls:
+          - hosts:
+              - "{{ .Release.Namespace }}.sharedkube.io"
+            # Required, your domain name
+            secretName: vcluster-sharedkube-io-tls # Required, your secret name where the certificate is stored
+
+    policies:
+      # empty, baseline, restricted can be used here
+      podSecurityStandard: baseline
+
+    rbac:
+      role:
+        enabled: false
+      clusterRole:
+        enabled: false
