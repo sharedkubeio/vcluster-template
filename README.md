@@ -8,9 +8,11 @@ Template FluxCD GitOps repository for [vCluster](https://www.vcluster.com/docs) 
 3. Merge your changes.
 4. Create `g1.large` (3vCPU, 12GB Memory) type of Sharedkube Zone.
 5. Configure FluxCD in the UI to sync your forked repository.
-6. Log in to your zone following the [guide](https://docs.sharedkube.io/getting-started).
+    * Repository URL: `<your_github_username>/vcluster-template`
+    * FluxCD Path: `flux`
+6. Log in to your zone following the Sharedkube [Getting Started Guide](https://docs.sharedkube.io/getting-started).
 7. Wait for the deployment to finish.
-8. Export vcluster kubeconfig:
+8. Export vCluster kubeconfig:
     ```bash
     kubectl get secret vc-vcluster --template={{.data.config}} | base64 -D > vcluster.kubeconfig
     ```
