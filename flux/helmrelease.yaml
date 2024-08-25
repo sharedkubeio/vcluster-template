@@ -57,14 +57,13 @@ spec:
             runAsNonRoot: true
       ingress:
         enabled: true
-        host: "{{ .Release.Namespace }}.sharedkube.io"
+        host: sk-blockyjungle.sharedkube.io
         annotations:
           cert-manager.io/issuer: "letsencrypt-prod" # Required for TLS, letsencrypt-prod or letsencrypt-staging
         spec:
           tls:
           - hosts:
-              - "{{ .Release.Namespace }}.sharedkube.io"
-            # Required, your domain name
+              - sk-blockyjungle.sharedkube.io # Required, your domain name
             secretName: vcluster-sharedkube-io-tls # Required, your secret name where the certificate is stored
 
     policies:
